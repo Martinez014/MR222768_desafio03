@@ -222,24 +222,22 @@ Nunca confirme `.env` ni contraseñas reales. `.env.example` contiene solo un va
 
 ## Publicación en GitHub
 
-No se realiza ningún `push` automáticamente. Cuando haya revisado el proyecto:
+El repositorio privado del proyecto se encuentra en:
+
+**[github.com/Martinez014/MR222768_desafio03](https://github.com/Martinez014/MR222768_desafio03)**
+
+Para clonar el proyecto mediante HTTPS:
 
 ```powershell
-git init
-git add .
-git commit -m "Entrega sistema de pedidos"
-git branch -M main
-git remote add origin https://github.com/USUARIO/REPOSITORIO.git
-git push -u origin main
+git clone https://github.com/Martinez014/MR222768_desafio03.git
 ```
 
-Antes del `git add`, ejecute `git status` y confirme que `.env`, `bin`, `obj` y credenciales no aparecen.
+El acceso requiere una cuenta autorizada porque el repositorio es privado. El archivo `.env`, las carpetas `bin` y `obj`, y los archivos temporales están excluidos mediante `.gitignore`.
 
-## Evidencias y PDF (por completar)
+## Evidencias y documento de entrega
 
-- Enlace del repositorio: ______________________________
-- Capturas de Swagger/API: ______________________________
-- Captura de pruebas: ______________________________
-- Captura de contenedores: ______________________________
+- Enlace del repositorio: [https://github.com/Martinez014/MR222768_desafio03](https://github.com/Martinez014/MR222768_desafio03)
+- Capturas reales: `docs/evidencias/`
+- Documento Word editable: `docs/MR222768_Desafio03_Entrega.docx`
 
-Consulte `docs/EVIDENCIAS.md`. El PDF final debe prepararse solo después de obtener capturas y enlaces reales.
+Consulte `docs/EVIDENCIAS.md`. El PDF definitivo debe generarse después de revisar el documento Word y sustituir las capturas si se desea.
