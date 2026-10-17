@@ -1,243 +1,118 @@
-# MR222768_desafío03 — Sistema de pedidos
+# Sistema de Pedidos
 
-API REST académica para administrar clientes, productos e inventario, y pedidos. Está construida con ASP.NET Core 8, arquitectura de cuatro capas, Entity Framework Core Code First, SQL Server, Docker y pruebas unitarias xUnit.
+## Descripción
 
-## Tecnologías
+Sistema de pedidos desarrollado como una API REST con ASP.NET Core 8. Permite registrar clientes y productos, administrar pedidos y mantener actualizado el stock disponible. La información se almacena en SQL Server mediante Entity Framework Core.
 
-- .NET 8 / ASP.NET Core Web API con controladores
-- Entity Framework Core 8 y proveedor SQL Server
-- Data Annotations
-- Swagger/OpenAPI (Swashbuckle)
+La API utiliza controladores y DTO para separar los datos recibidos de las entidades de dominio. También aplica validaciones antes de guardar la información y devuelve códigos HTTP según el resultado de cada operación.
+
+## Tecnologías utilizadas
+
+- .NET 8 y C#
+- ASP.NET Core Web API
+- Entity Framework Core 8 con enfoque Code First
+- SQL Server 2022
+- Swagger y OpenAPI
+- Docker y Docker Compose
 - xUnit
-- SQL Server 2022 y Docker Compose
 
-## Arquitectura y estructura
+## Estructura del proyecto
 
-Las dependencias apuntan hacia adentro: `API -> Application <- Infrastructure -> Domain`; Application también depende de Domain. Los controladores solo coordinan HTTP y delegan a servicios.
+La solución está organizada en cuatro capas principales:
 
-```text
-MR222768_desafio03/
-├── src/
-│   ├── SistemaPedidos.API/             Controladores, Swagger y middleware
-│   ├── SistemaPedidos.Application/     DTOs, interfaces y casos de uso
-│   ├── SistemaPedidos.Domain/          Entidades y excepciones de dominio
-│   └── SistemaPedidos.Infrastructure/  EF Core, repositorios y migraciones
-├── tests/SistemaPedidos.Tests/         Pruebas unitarias y dobles de prueba
-├── docs/EVIDENCIAS.md                  Guía para completar el PDF
-├── SistemaPedidos.http                 Solicitudes HTTP de ejemplo
-├── Dockerfile
-├── docker-compose.yml
-└── MR222768_desafío03.sln
-```
+- **SistemaPedidos.API:** contiene los controladores, la configuración de la aplicación, Swagger y el manejo de errores HTTP.
+- **SistemaPedidos.Application:** contiene los DTO, las interfaces de servicios y repositorios, y la lógica de negocio.
+- **SistemaPedidos.Domain:** contiene las entidades Cliente, Producto y Pedido, además de las excepciones del dominio.
+- **SistemaPedidos.Infrastructure:** contiene el contexto de Entity Framework Core, los repositorios, las configuraciones de las entidades y las migraciones de la base de datos.
 
-## Requisitos previos
+Las pruebas unitarias se encuentran en `tests/SistemaPedidos.Tests`.
 
-- SDK .NET 8 o posterior capaz de compilar `net8.0`.
-- SQL Server accesible, o Docker Desktop con contenedores Linux.
-- Git, solo para publicar el proyecto.
+## Funcionalidades
 
-La herramienta `dotnet-ef` 8.0.30 está declarada localmente en `.config/dotnet-tools.json`; no se necesita instalarla globalmente.
+- Registro, consulta, actualización y eliminación de clientes.
+- Registro, consulta, actualización y eliminación de productos.
+- Creación y administración de pedidos relacionados con un cliente y un producto.
+- Descuento automático del stock al crear un pedido.
+- Ajuste del inventario al actualizar o eliminar un pedido.
+- Validación de campos obligatorios, correo electrónico, precio, stock y cantidad.
+- Rechazo de pedidos cuando el cliente o el producto no existen.
+- Rechazo de pedidos cuando el stock disponible es insuficiente.
+- Restricción para eliminar clientes o productos que tienen pedidos asociados.
+- Control de concurrencia del inventario mediante una columna `RowVersion`.
 
-## Ejecución local en Windows
+## Ejecución del proyecto
 
-Desde PowerShell, en la raíz del proyecto:
+### Requisitos
 
-```powershell
-dotnet restore "MR222768_desafío03.sln"
-dotnet tool restore
-$env:ConnectionStrings__DefaultConnection="Server=localhost,1433;Database=SistemaPedidosDb;User Id=sa;Password=SU_CLAVE;TrustServerCertificate=True;Encrypt=False"
-dotnet tool run dotnet-ef database update --project src/SistemaPedidos.Infrastructure --startup-project src/SistemaPedidos.API
-dotnet run --project src/SistemaPedidos.API --urls http://localhost:8080
-```
+- Docker Desktop con contenedores Linux.
+- Puertos `8080` y `1433` disponibles.
+- .NET 8 SDK para ejecutar las pruebas o trabajar sin Docker.
 
-Si se desea que la API aplique las migraciones con reintentos al iniciar:
+### Ejecución con Docker
 
-```powershell
-$env:ApplyMigrations="true"
-dotnet run --project src/SistemaPedidos.API --urls http://localhost:8080
-```
-
-No se usa `EnsureCreated`; la base se crea y evoluciona exclusivamente con migraciones.
-
-## Ejecución con Docker
-
-1. Cree el archivo local de variables y cambie la contraseña:
+Desde la carpeta raíz del proyecto, cree el archivo local de variables de entorno:
 
 ```powershell
 Copy-Item .env.example .env
-notepad .env
 ```
 
-2. Valide, construya e inicie:
+Abra `.env` y reemplace el valor de `SQL_SA_PASSWORD` por una contraseña propia que incluya mayúsculas, minúsculas, números y símbolos. Este archivo está excluido de Git.
+
+Inicie SQL Server y la API:
 
 ```powershell
-docker compose config
-docker compose build
-docker compose up -d
-docker compose ps
-docker compose logs -f api
+docker compose up --build -d
 ```
 
-Compose espera a que SQL Server responda al healthcheck. Luego la API reintenta la conexión y ejecuta `Database.Migrate()`; por tanto, aplica la migración inicial antes de aceptar tráfico. La API se conecta a `sqlserver`, el nombre interno del servicio, y escucha por HTTP en el puerto 8080.
+Puede comprobar el estado de los servicios con:
 
-Para detener los servicios conservando los datos:
+```powershell
+docker compose ps
+```
+
+La API espera que SQL Server esté disponible y aplica las migraciones de Entity Framework Core durante el inicio. Cuando ambos contenedores estén listos, Swagger estará disponible en:
+
+```text
+http://localhost:8080/swagger
+```
+
+Para detener los contenedores sin eliminar el volumen de la base de datos:
 
 ```powershell
 docker compose down
 ```
 
-Para eliminar también el volumen de base de datos (acción destructiva):
-
-```powershell
-docker compose down -v
-```
-
-## Documentación de API
-
-Con la aplicación iniciada:
-
-- Swagger UI: <http://localhost:8080/swagger>
-- Especificación OpenAPI: <http://localhost:8080/swagger/v1/swagger.json>
-
 ## Endpoints
 
-| Método | Ruta | Resultado principal |
+| Método | Ruta | Descripción |
 |---|---|---|
-| GET | `/api/clientes` | Lista clientes |
-| GET | `/api/clientes/{id}` | Consulta un cliente |
-| POST | `/api/clientes` | Crea un cliente (201) |
-| PUT | `/api/clientes/{id}` | Actualiza un cliente (200) |
-| DELETE | `/api/clientes/{id}` | Elimina un cliente (204) |
-| GET | `/api/productos` | Lista productos |
-| GET | `/api/productos/{id}` | Consulta un producto |
-| POST | `/api/productos` | Crea un producto (201) |
-| PUT | `/api/productos/{id}` | Actualiza un producto (200) |
-| DELETE | `/api/productos/{id}` | Elimina un producto (204) |
-| GET | `/api/pedidos` | Lista pedidos con resumen de cliente y producto |
-| GET | `/api/pedidos/{id}` | Consulta un pedido |
-| POST | `/api/pedidos` | Crea pedido y descuenta stock (201) |
-| PUT | `/api/pedidos/{id}` | Actualiza pedido y ajusta stock (200) |
-| DELETE | `/api/pedidos/{id}` | Elimina pedido y restaura stock (204) |
-
-Los datos inválidos devuelven 400; registros inexistentes, 404; reglas de negocio o concurrencia, 409; y errores inesperados, 500 sin detalles internos.
-
-## Ejemplos JSON
-
-Cliente:
-
-```json
-{
-  "nombre": "Ana",
-  "apellido": "López",
-  "email": "ana@example.com"
-}
-```
-
-Producto:
-
-```json
-{
-  "nombre": "Teclado",
-  "descripcion": "Teclado mecánico",
-  "precio": 49.99,
-  "stock": 10
-}
-```
-
-Pedido:
-
-```json
-{
-  "fechaPedido": "2026-10-16T12:00:00Z",
-  "cantidad": 2,
-  "clienteId": 1,
-  "productoId": 1
-}
-```
-
-Hay más peticiones listas para ejecutar en `SistemaPedidos.http`.
-
-## Migraciones EF Core
-
-Restaurar la herramienta y listar migraciones:
-
-```powershell
-dotnet tool restore
-dotnet tool run dotnet-ef migrations list --project src/SistemaPedidos.Infrastructure --startup-project src/SistemaPedidos.API
-```
-
-Aplicar migraciones:
-
-```powershell
-dotnet tool run dotnet-ef database update --project src/SistemaPedidos.Infrastructure --startup-project src/SistemaPedidos.API
-```
-
-Crear una migración futura:
-
-```powershell
-dotnet tool run dotnet-ef migrations add NombreMigracion --project src/SistemaPedidos.Infrastructure --startup-project src/SistemaPedidos.API --output-dir Persistence/Migrations
-```
+| GET | `/api/clientes` | Lista todos los clientes. |
+| GET | `/api/clientes/{id}` | Consulta un cliente por su identificador. |
+| POST | `/api/clientes` | Registra un cliente. |
+| PUT | `/api/clientes/{id}` | Actualiza un cliente. |
+| DELETE | `/api/clientes/{id}` | Elimina un cliente sin pedidos asociados. |
+| GET | `/api/productos` | Lista todos los productos. |
+| GET | `/api/productos/{id}` | Consulta un producto por su identificador. |
+| POST | `/api/productos` | Registra un producto. |
+| PUT | `/api/productos/{id}` | Actualiza un producto. |
+| DELETE | `/api/productos/{id}` | Elimina un producto sin pedidos asociados. |
+| GET | `/api/pedidos` | Lista todos los pedidos. |
+| GET | `/api/pedidos/{id}` | Consulta un pedido por su identificador. |
+| POST | `/api/pedidos` | Crea un pedido y descuenta el stock. |
+| PUT | `/api/pedidos/{id}` | Actualiza un pedido y ajusta el stock. |
+| DELETE | `/api/pedidos/{id}` | Elimina un pedido y devuelve el stock. |
 
 ## Pruebas
 
-Las pruebas no requieren SQL Server ni Docker: los servicios se aíslan mediante repositorios falsos dedicados al proyecto de pruebas.
+Las pruebas unitarias validan los servicios de clientes, productos y pedidos, así como las reglas de inventario y las Data Annotations de los DTO. No requieren SQL Server ni contenedores Docker.
+
+Para restaurar las dependencias y ejecutar las pruebas:
 
 ```powershell
-dotnet test "MR222768_desafío03.sln" --configuration Release
+dotnet restore "MR222768_desafío03.sln"
+dotnet test "MR222768_desafío03.sln"
 ```
 
-También se puede generar cobertura:
+## Autor
 
-```powershell
-dotnet test "MR222768_desafío03.sln" --collect:"XPlat Code Coverage"
-```
-
-## Consistencia y concurrencia
-
-- Crear, actualizar y eliminar pedidos ocurre dentro de una transacción SQL `Serializable`.
-- `Productos.Version` se configura como `rowversion`; EF Core detecta actualizaciones concurrentes.
-- Si otro proceso modifica el inventario, la operación devuelve 409 y el cliente debe volver a consultar.
-- Las restricciones `CHECK` de SQL Server impiden precio/cantidad no positivos y stock negativo aun si se omite la API.
-- Las claves foráneas usan borrado restringido. Además, los servicios rechazan expresamente eliminar clientes o productos con pedidos.
-
-## Variables de entorno
-
-| Variable | Uso |
-|---|---|
-| `SQL_SA_PASSWORD` | Compose: contraseña de `sa`; solo debe estar en `.env` local |
-| `ConnectionStrings__DefaultConnection` | Sobrescribe la conexión configurada |
-| `ApplyMigrations` | `true` aplica migraciones al inicio con reintentos |
-| `ASPNETCORE_URLS` | Dirección de escucha, p. ej. `http://+:8080` |
-
-Nunca confirme `.env` ni contraseñas reales. `.env.example` contiene solo un valor de muestra.
-
-## Problemas frecuentes
-
-- **Error de contraseña de SQL Server:** use al menos 8 caracteres y combine mayúscula, minúscula, número y símbolo; después recree el contenedor.
-- **Puerto 1433 u 8080 ocupado:** detenga el servicio conflictivo o cambie el lado izquierdo del mapeo en `docker-compose.yml`.
-- **SQL Server aún no responde:** revise `docker compose logs sqlserver`; el arranque inicial puede tardar.
-- **Migración pendiente:** ejecute `dotnet tool restore` y luego `dotnet tool run dotnet-ef database update ...`.
-- **Certificado SQL local:** la conexión de desarrollo ya usa `TrustServerCertificate=True;Encrypt=False`; no utilice esa política sin evaluación en producción.
-- **Docker Desktop apagado:** inícielo y espere hasta que el motor indique que está listo.
-
-## Publicación en GitHub
-
-El repositorio privado del proyecto se encuentra en:
-
-**[github.com/Martinez014/MR222768_desafio03](https://github.com/Martinez014/MR222768_desafio03)**
-
-Para clonar el proyecto mediante HTTPS:
-
-```powershell
-git clone https://github.com/Martinez014/MR222768_desafio03.git
-```
-
-El acceso requiere una cuenta autorizada porque el repositorio es privado. El archivo `.env`, las carpetas `bin` y `obj`, y los archivos temporales están excluidos mediante `.gitignore`.
-
-## Evidencias y documento de entrega
-
-- Enlace del repositorio: [https://github.com/Martinez014/MR222768_desafio03](https://github.com/Martinez014/MR222768_desafio03)
-- Capturas reales: `docs/evidencias/`
-- Documento Word editable: `docs/MR222768_Desafio03_Entrega.docx`
-
-Consulte `docs/EVIDENCIAS.md`. El PDF definitivo debe generarse después de revisar el documento Word y sustituir las capturas si se desea.
+CIF: MR222768

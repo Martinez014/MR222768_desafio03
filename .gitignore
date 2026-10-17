@@ -4,6 +4,7 @@
 artifacts/
 TestResults/
 /tmp/
+/docs/
 
 # Configuración local y secretos
 .env
