@@ -1,5 +1,5 @@
 Publicación verificada el 17 de octubre de 2026.
 Repositorio: https://github.com/Martinez014/MR222768_desafio03
 Visibilidad: privado
-Rama preparada para publicación: main
+Rama publicada y configurada para seguir origin/main.
 La verificación de archivos sensibles no encontró .env, bin ni obj entre los archivos versionados.
