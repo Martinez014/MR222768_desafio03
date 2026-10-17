@@ -5,6 +5,14 @@ artifacts/
 TestResults/
 /tmp/
 /docs/
+/output/
+
+# Documentos de entrega locales
+*.pdf
+*.doc
+*.docx
+/scripts/generar_documento_entrega.py
+/scripts/generar_pdf.py
 
 # Configuración local y secretos
 .env
