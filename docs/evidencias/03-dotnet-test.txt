@@ -1,0 +1,36 @@
+Serie de pruebas para C:\Users\PC\Documents\MR222768_desafio03\tests\SistemaPedidos.Tests\bin\Release\net8.0\SistemaPedidos.Tests.dll (.NETCoreApp,Version=v8.0)
+Versión 17.14.1 (x64) de VSTest
+
+Iniciando la ejecución de pruebas, espere...
+1 archivos de prueba en total coincidieron con el patrón especificado.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.32)
+[xUnit.net 00:00:00.12]   Discovering: SistemaPedidos.Tests
+[xUnit.net 00:00:00.18]   Discovered:  SistemaPedidos.Tests
+[xUnit.net 00:00:00.18]   Starting:    SistemaPedidos.Tests
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.CrearPedido_ConRelacionInexistente_LanzaNoEncontrado(clienteId: 1, productoId: 999) [59 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.CrearPedido_ConRelacionInexistente_LanzaNoEncontrado(clienteId: 999, productoId: 1) [< 1 ms]
+  Correctas SistemaPedidos.Tests.Validation.DtoValidationTests.ProductoConPrecioOStockInvalido_EsRechazado(precio: 0, stock: 1) [65 ms]
+  Correctas SistemaPedidos.Tests.Validation.DtoValidationTests.ProductoConPrecioOStockInvalido_EsRechazado(precio: -1, stock: 1) [< 1 ms]
+  Correctas SistemaPedidos.Tests.Services.ClienteProductoServiceTests.CrearProducto_ConDatosValidos_CreaRegistro [65 ms]
+  Correctas SistemaPedidos.Tests.Validation.DtoValidationTests.ProductoConPrecioOStockInvalido_EsRechazado(precio: 10, stock: -1) [< 1 ms]
+  Correctas SistemaPedidos.Tests.Services.ClienteProductoServiceTests.CrearCliente_ConDatosValidos_CreaRegistro [2 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.ActualizarCambiandoProducto_RestauraAnteriorYDescuentaNuevo [2 ms]
+  Correctas SistemaPedidos.Tests.Validation.DtoValidationTests.ClienteConEmailInvalido_EsRechazado [2 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.ActualizarCantidad_AjustaStockPorDiferencia [< 1 ms]
+  Correctas SistemaPedidos.Tests.Validation.DtoValidationTests.ClienteSinCamposObligatorios_EsRechazado [< 1 ms]
+  Correctas SistemaPedidos.Tests.Services.ClienteProductoServiceTests.ConsultarClienteInexistente_DevuelveNull [< 1 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.ConsultarPedidoExistente_DevuelveClienteYProducto [1 ms]
+  Correctas SistemaPedidos.Tests.Services.ClienteProductoServiceTests.EliminarProductoConPedidos_LanzaConflicto [1 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.EliminarPedido_RestauraStock [2 ms]
+[xUnit.net 00:00:00.31]   Finished:    SistemaPedidos.Tests
+  Correctas SistemaPedidos.Tests.Services.ClienteProductoServiceTests.EliminarClienteConPedidos_LanzaConflicto [1 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.ConsultarPedidoInexistente_DevuelveNull [< 1 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.CrearPedido_SinStockSuficiente_LanzaConflictoYNoModificaStock [< 1 ms]
+  Correctas SistemaPedidos.Tests.Services.PedidoServiceTests.CrearPedido_Valido_CreaPedidoYDescuentaStock [< 1 ms]
+
+La serie de pruebas se ejecutó correctamente.
+Pruebas totales: 19
+     Correcto: 19
+ Tiempo total: 0.9213 Segundos
+
+Hay actualizaciones de carga de trabajo disponibles. Ejecute "dotnet workload list" para obtener más información.

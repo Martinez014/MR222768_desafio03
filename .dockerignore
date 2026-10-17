@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+.git/
+.gitignore
+.env
+.dotnet-home/
+TestResults/
+*.user
+*.suo
+README.md
+docs/

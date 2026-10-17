@@ -1,0 +1,32 @@
+# Compilación .NET
+**/bin/
+**/obj/
+artifacts/
+TestResults/
+/tmp/
+
+# Configuración local y secretos
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+secrets.json
+
+# Herramientas y entorno local de Codex/.NET
+.dotnet-home/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Sistema y temporales
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Cobertura
+coverage/
+coverage.*
+*.trx

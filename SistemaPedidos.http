@@ -1,0 +1,28 @@
+@host = http://localhost:8080
+
+### Crear cliente
+POST {{host}}/api/clientes
+Content-Type: application/json
+
+{"nombre":"Ana","apellido":"López","email":"ana@example.com"}
+
+### Crear producto
+POST {{host}}/api/productos
+Content-Type: application/json
+
+{"nombre":"Teclado","descripcion":"Teclado mecánico","precio":49.99,"stock":10}
+
+### Crear pedido (ajuste los identificadores si es necesario)
+POST {{host}}/api/pedidos
+Content-Type: application/json
+
+{"fechaPedido":"2026-10-16T12:00:00Z","cantidad":2,"clienteId":1,"productoId":1}
+
+### Consultar pedidos
+GET {{host}}/api/pedidos
+
+### Validación: email inválido (400)
+POST {{host}}/api/clientes
+Content-Type: application/json
+
+{"nombre":"Ana","apellido":"López","email":"correo-invalido"}

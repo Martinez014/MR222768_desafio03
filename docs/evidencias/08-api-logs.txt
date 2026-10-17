@@ -1,0 +1,160 @@
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+api-1  |          at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+api-1  |          at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+api-1  |          at SistemaPedidos.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /src/src/SistemaPedidos.API/Middleware/ExceptionHandlingMiddleware.cs:line 13
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [c].[Id], [c].[Apellido], [c].[Email], [c].[Nombre]
+api-1  |       FROM [Clientes] AS [c]
+api-1  |       WHERE [c].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [c].[Id], [c].[Apellido], [c].[Email], [c].[Nombre]
+api-1  |       FROM [Clientes] AS [c]
+api-1  |       WHERE [c].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT CASE
+api-1  |           WHEN EXISTS (
+api-1  |               SELECT 1
+api-1  |               FROM [Pedidos] AS [p]
+api-1  |               WHERE [p].[ClienteId] = @__id_0) THEN CAST(1 AS bit)
+api-1  |           ELSE CAST(0 AS bit)
+api-1  |       END
+api-1  | warn: SistemaPedidos.API.Middleware.ExceptionHandlingMiddleware[0]
+api-1  |       Solicitud rechazada con estado 409
+api-1  |       SistemaPedidos.Domain.Exceptions.BusinessConflictException: No se puede eliminar el cliente porque tiene pedidos asociados.
+api-1  |          at SistemaPedidos.Application.Services.ClienteService.DeleteAsync(Int32 id, CancellationToken cancellationToken) in /src/src/SistemaPedidos.Application/Services/ClienteService.cs:line 43
+api-1  |          at SistemaPedidos.API.Controllers.ClientesController.Delete(Int32 id, CancellationToken cancellationToken) in /src/src/SistemaPedidos.API/Controllers/ClientesController.cs:line 44
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+api-1  |          at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+api-1  |          at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+api-1  |          at SistemaPedidos.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /src/src/SistemaPedidos.API/Middleware/ExceptionHandlingMiddleware.cs:line 13
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[Nombre], [p].[Precio], [p].[Stock], [p].[Version]
+api-1  |       FROM [Productos] AS [p]
+api-1  |       WHERE [p].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT CASE
+api-1  |           WHEN EXISTS (
+api-1  |               SELECT 1
+api-1  |               FROM [Pedidos] AS [p]
+api-1  |               WHERE [p].[ProductoId] = @__id_0) THEN CAST(1 AS bit)
+api-1  |           ELSE CAST(0 AS bit)
+api-1  |       END
+api-1  | warn: SistemaPedidos.API.Middleware.ExceptionHandlingMiddleware[0]
+api-1  |       Solicitud rechazada con estado 409
+api-1  |       SistemaPedidos.Domain.Exceptions.BusinessConflictException: No se puede eliminar el producto porque tiene pedidos asociados.
+api-1  |          at SistemaPedidos.Application.Services.ProductoService.DeleteAsync(Int32 id, CancellationToken cancellationToken) in /src/src/SistemaPedidos.Application/Services/ProductoService.cs:line 46
+api-1  |          at SistemaPedidos.API.Controllers.ProductosController.Delete(Int32 id, CancellationToken cancellationToken) in /src/src/SistemaPedidos.API/Controllers/ProductosController.cs:line 40
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+api-1  |          at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+api-1  |          at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+api-1  |          at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+api-1  |          at SistemaPedidos.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /src/src/SistemaPedidos.API/Middleware/ExceptionHandlingMiddleware.cs:line 13
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [p].[Id], [p].[Cantidad], [p].[ClienteId], [p].[FechaPedido], [p].[ProductoId], [c].[Id], [c].[Apellido], [c].[Email], [c].[Nombre], [p0].[Id], [p0].[Descripcion], [p0].[Nombre], [p0].[Precio], [p0].[Stock], [p0].[Version]
+api-1  |       FROM [Pedidos] AS [p]
+api-1  |       INNER JOIN [Clientes] AS [c] ON [p].[ClienteId] = [c].[Id]
+api-1  |       INNER JOIN [Productos] AS [p0] ON [p].[ProductoId] = [p0].[Id]
+api-1  |       WHERE [p].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [c].[Id], [c].[Apellido], [c].[Email], [c].[Nombre]
+api-1  |       FROM [Clientes] AS [c]
+api-1  |       WHERE [c].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (3ms) [Parameters=[@p2='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p4='?' (DbType = Int32), @p3='?' (DbType = Int32), @p5='?' (Size = 8) (DbType = Binary)], CommandType='Text', CommandTimeout='30']
+api-1  |       SET NOCOUNT ON;
+api-1  |       UPDATE [Pedidos] SET [Cantidad] = @p0, [FechaPedido] = @p1
+api-1  |       OUTPUT 1
+api-1  |       WHERE [Id] = @p2;
+api-1  |       UPDATE [Productos] SET [Stock] = @p3
+api-1  |       OUTPUT INSERTED.[Version]
+api-1  |       WHERE [Id] = @p4 AND [Version] = @p5;
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[Nombre], [p].[Precio], [p].[Stock], [p].[Version]
+api-1  |       FROM [Productos] AS [p]
+api-1  |       WHERE [p].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [p].[Id], [p].[Cantidad], [p].[ClienteId], [p].[FechaPedido], [p].[ProductoId], [c].[Id], [c].[Apellido], [c].[Email], [c].[Nombre], [p0].[Id], [p0].[Descripcion], [p0].[Nombre], [p0].[Precio], [p0].[Stock], [p0].[Version]
+api-1  |       FROM [Pedidos] AS [p]
+api-1  |       INNER JOIN [Clientes] AS [c] ON [p].[ClienteId] = [c].[Id]
+api-1  |       INNER JOIN [Productos] AS [p0] ON [p].[ProductoId] = [p0].[Id]
+api-1  |       WHERE [p].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Int32), @p2='?' (DbType = Int32), @p1='?' (DbType = Int32), @p3='?' (Size = 8) (DbType = Binary)], CommandType='Text', CommandTimeout='30']
+api-1  |       SET NOCOUNT ON;
+api-1  |       DELETE FROM [Pedidos]
+api-1  |       OUTPUT 1
+api-1  |       WHERE [Id] = @p0;
+api-1  |       UPDATE [Productos] SET [Stock] = @p1
+api-1  |       OUTPUT INSERTED.[Version]
+api-1  |       WHERE [Id] = @p2 AND [Version] = @p3;
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[Nombre], [p].[Precio], [p].[Stock], [p].[Version]
+api-1  |       FROM [Productos] AS [p]
+api-1  |       WHERE [p].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [p].[Id], [p].[Descripcion], [p].[Nombre], [p].[Precio], [p].[Stock], [p].[Version]
+api-1  |       FROM [Productos] AS [p]
+api-1  |       WHERE [p].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT CASE
+api-1  |           WHEN EXISTS (
+api-1  |               SELECT 1
+api-1  |               FROM [Pedidos] AS [p]
+api-1  |               WHERE [p].[ProductoId] = @__id_0) THEN CAST(1 AS bit)
+api-1  |           ELSE CAST(0 AS bit)
+api-1  |       END
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 8) (DbType = Binary)], CommandType='Text', CommandTimeout='30']
+api-1  |       SET IMPLICIT_TRANSACTIONS OFF;
+api-1  |       SET NOCOUNT ON;
+api-1  |       DELETE FROM [Productos]
+api-1  |       OUTPUT 1
+api-1  |       WHERE [Id] = @p0 AND [Version] = @p1;
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT TOP(1) [c].[Id], [c].[Apellido], [c].[Email], [c].[Nombre]
+api-1  |       FROM [Clientes] AS [c]
+api-1  |       WHERE [c].[Id] = @__id_0
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SELECT CASE
+api-1  |           WHEN EXISTS (
+api-1  |               SELECT 1
+api-1  |               FROM [Pedidos] AS [p]
+api-1  |               WHERE [p].[ClienteId] = @__id_0) THEN CAST(1 AS bit)
+api-1  |           ELSE CAST(0 AS bit)
+api-1  |       END
+api-1  | info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+api-1  |       Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+api-1  |       SET IMPLICIT_TRANSACTIONS OFF;
+api-1  |       SET NOCOUNT ON;
+api-1  |       DELETE FROM [Clientes]
+api-1  |       OUTPUT 1
+api-1  |       WHERE [Id] = @p0;
